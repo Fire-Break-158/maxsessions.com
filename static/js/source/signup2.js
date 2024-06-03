@@ -1,0 +1,3 @@
+﻿function BindEvents() {
+    $(".select").chosen();
+}

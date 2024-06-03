@@ -1,0 +1,37 @@
+
+
+<div class="col-lg-3 sidebar">
+    <ul>
+        <li class="{% if url_for(request.endpoint)  == "/" %}active{% endif %}">
+            <a href="/">
+                <div class="sidebar_item">
+                    <div class="iconholder">
+                        <div class="icon icon-home"></div>
+                    </div>
+                    Home
+                </div>
+            </a>      
+        </li>
+        <li class="{% if url_for(request.endpoint)  == "/dockerstatus" %}active{% endif %}">
+            <a href="dockerstatus">
+                <div class="sidebar_item">
+                    <div class="iconholder">
+                        <div class="icon icon-docker"></div>
+                    </div>
+                    Docker Status
+                </div>
+            </a>      
+        </li>
+        <li class="{% if url_for(request.endpoint)  == "/containercreator" %}active{% endif %}">
+            <a href="containercreator">
+                <div class="sidebar_item">
+                    <div class="iconholder">
+                        <div class="icon icon-docker-plus"></div>
+                    </div>
+                    Container Creator
+                </div>
+            </a>      
+        </li>
+
+    </ul>
+</div>

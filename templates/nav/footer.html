@@ -1,0 +1,50 @@
+{% set showFooter = True %}
+{% if footer is defined %}
+    {% set showFooter = footer %}
+{% endif %}
+
+{% if showFooter %}
+
+    <br>
+    <br>
+    <br>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Footer Example</title>
+        <style>
+            body {
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+            }
+            .footer {
+                background-color: #001f38;
+                color: #fff;
+                text-align: center;
+                height: 75px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                position: fixed;
+                bottom: 0
+            }
+        </style>
+    </head>
+    <body>
+        <div class="content">
+            <!-- Main content of the page goes here -->
+        </div>
+        <footer class="footer">
+            Max Sessions- <span id="year"></span>. All rights reserved.
+        </footer>
+        <script>
+            document.getElementById('year').textContent = new Date().getFullYear();
+        </script>
+    </body>
+    </html>
+{% endif %}

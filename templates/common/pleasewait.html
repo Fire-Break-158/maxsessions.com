@@ -1,0 +1,13 @@
+
+{% extends "common/sidebar_page.html" %}
+
+{% block content %}
+{% with name='Please Wait' %}
+    {% include 'common/section_heading.html' %}
+{% endwith %}
+<p>The System is processing your request.  Please be patient as we interact with the various systems necessary to complete your transaction.</p>
+
+<br><br>
+
+<p style="text-align:center;"><img src="../../static/images/loading.gif" class="center"></p>
+{% endblock %}

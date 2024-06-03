@@ -1,0 +1,152 @@
+{% if sideMenu == True %}
+    {% extends "common/sidebar_page.html" %}
+{% elif developmentSideMenu == True %}
+    {% extends "common/development_sidebar_page.html" %}
+{% elif developmentCertificatesSideMenu == True %}
+    {% extends "common/development_certificates_sidebar_page.html" %}  
+{% elif businessSideMenu == True %}
+    {% extends "common/business_sidebar_page.html" %}  
+{% elif developmentEoyreportingSideMenu == True %}
+    {% extends "common/development_eoyreporting_sidebar_page.html" %}
+{% elif fullPage == True %}    
+    {% extends "common/full_page.html" %}              
+{% elif opsKeysSideMenu == True %} 
+    {% extends "common/ops_keys_sidebar_page.html" %}
+{% elif volunteerSideMenu == True %} 
+    {% extends "common/volunteer_sidebar_page.html" %}             
+{% else %}
+    {% if not sideMenu == False %}
+        {% extends "common/full_page.html" %}
+    {% endif %}
+{% endif %}
+
+{% set returnurl = 'userlookup' %}
+{% if callback is defined %}
+    {% set returnurl = callback %}
+{% endif %}
+
+{% set displaySalesforceButton = True %}
+{% if sfButton is defined %}
+    {% set displaySalesforceButton = sfButton %}
+{% endif %}
+
+
+{% block content %}
+
+<script type="text/javascript">// <![CDATA[
+    function loading(){
+        $("#loading").show();
+        $("#content").hide();       
+    }
+// ]]></script>
+
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 12px;
+    }
+
+    table tr:nth-child(even) {
+        background-color: #e9f8fc; /* Adjust the greenbar color as desired */
+    }
+
+    table th,
+    table td {
+        padding: 3px;
+        text-align: left;
+    }
+
+    .btn-custom {
+      text-transform: none; /* Set the text transform to none */
+    }
+
+    div#loading {
+        display: none;
+        cursor: wait;
+    }
+
+    div#hcenter {
+        margin-left:auto;
+        margin-right:auto;
+        width:300px;
+        text-align:center;
+    }
+</style>
+
+<script type="text/javascript">
+    console.log("Jinja - returnurl: {{ returnurl }}");
+</script>
+
+<div id="content">
+    {%  if (
+            'User Lookup' in permissions 
+            or 'Development: User Lookup' in permissions 
+            or 'IVA Tools' in permissions 
+            or 'King Of The Hill' in permissions
+        ) or (
+            callback == '/volunteertimeclock'
+            or callback =='/vtc'
+        )
+    %}
+
+    {% with name='Contacts' %}
+        {% include 'common/section_heading.html' %}
+    {% endwith %}
+    <form id="ivaformlist" method="post" action="iva-list">
+        <table style="font-size: 14px;">
+            <thead>
+                <tr>
+                    <th>Salesforce ID</th>
+                    {% if volunteerSideMenu == True or showVolunteerId == True %}
+                    <th>Volunteer ID</th>
+                    {% endif %}
+                    <th>Last Name</th>
+                    <th>First Name</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+                <tbody>
+                    {% for record in userList %}
+                        <tr>
+                            {% if '?' in returnurl %}
+                                <td><a href='{{ returnurl }}&sfid={{ record.CASESAFEID__c }}'>{{ record.Id }}</a></td>
+                            {% else %}
+                                <td><a href='{{ returnurl }}?sfid={{ record.CASESAFEID__c }}'>{{ record.Id }}</a></td>
+                            {% endif %}
+                            {% if volunteerSideMenu == True or showVolunteerId == True %}
+                                <td><a href='{{ returnurl }}?sfid={{ record.CASESAFEID__c }}'>{{ record.PBC_Volgistics_Number__c }}</a></td>
+                            {% endif %}
+                            <td>{{ record.LastName }}</td>
+                            <td>{{ record.FirstName }}</td>
+                            <td>{{ record.Email }}</td>
+                            {% if displaySalesforceButton %}
+                                <td> <a href="https://battleshipiowa.lightning.force.com/lightning/r/Contact/{{ record.CASESAFEID__c }}/view" target="_blank" class="btn btn-secondary btn-custom" style="height: 1.5em; line-height: 0.75em; ">Salesforce</a></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody> 
+        </table>
+    </form>
+    {% else %}
+        {% with name='Permissions Error' %}
+            {% include 'common/section_heading.html' %}
+        {% endwith %}   
+        <p style="text-align:center;"><img src="../../static/images/acessdenied.png" width="20%"></p>
+        <div id=hcenter>
+            <h1>Access Denied</h1>
+            Please ask the system administrator for access if needed
+        </div>
+    {% endif %}
+</div>
+
+<div id=loading>
+    {% with name='Please Wait' %}
+        {% include 'common/section_heading.html' %}
+    {% endwith %}
+    <p></p>
+    <br><br>
+    <p style="text-align:center;"><img src="../../static/images/loading.gif" class="center"></p>
+</div>
+
+{% endblock %}

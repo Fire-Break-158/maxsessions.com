@@ -1,0 +1,51 @@
+{% set titleText = title|default('Max Sessions/Development Tools', true) %}
+{% set subtitleText = subtitle|default('', true) %}
+{% if userInfo is defined %}
+    {% set userName = userInfo['name'] %}
+{% endif %}  
+
+
+<style>
+    .custom-bg-black {
+      background-color: black;
+    }
+    
+    .banner-title {
+      color: white;
+      font-size: 1.75rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    
+    .subtitle-text {
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+    }
+
+    .logged-in-username {
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      text-align: right;
+    }
+</style>
+
+<header id="header">
+  <div class="custom-bg-black">
+    <div class="container-fluid py-3">
+      <div class="row align-items-center">
+        <div class="col-12 col-md-3 text-center">
+        <!--  <a class="navbar-brand" href="/logout"><img class="logo" src="static/images/NMSNLogo.png" alt="Max Sessions"/></a>  -->
+        </div>
+        <div class="col-12 col-md-6 text-center">
+          <div class="banner-title">{{ titleText }}</div>
+          <div class="subtitle-text">{{ subtitleText }}</div>
+        </div>
+        <div class="col-12 col-md-3 text-right" style="position: relative; top: 60px;">
+          <span class="logged-in-username">{{ userName }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

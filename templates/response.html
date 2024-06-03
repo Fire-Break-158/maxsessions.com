@@ -1,0 +1,615 @@
+<!-- This elif structure is pretty klunky and is the result of evolution....   Ah for the time to refactor -->
+{% if sideMenu == True %}
+    {% extends "common/sidebar_page.html" %}
+{% elif developmentSideMenu == True %}
+    {% extends "common/development_sidebar_page.html" %}
+{% elif developmentCertificatesSideMenu == True %}
+    {% extends "common/development_certificates_sidebar_page.html" %}  
+{% elif businessSideMenu == True %}
+    {% extends "common/business_sidebar_page.html" %} 
+{% elif IVASideMenu == True %}
+    {% extends "common/iva_sidebar_page.html" %}     
+{% elif fullPage == True %}    
+    {% extends "common/full_page.html" %}    
+{% elif opsKeysSideMenu == True %} 
+    {% extends "common/ops_keys_sidebar_page.html" %}
+{% elif dataToolsSideMenu == True %} 
+    {% extends "common/datatools_sidebar_page.html" %}  
+{% elif volunteerSideMenu == True %} 
+    {% extends "common/volunteer_sidebar_page.html" %}    
+{% else %}
+    {% if not sideMenu==False %}
+        {% extends "common/sidebar_page.html" %}
+    {% else %}
+        {% extends "override.html" %}
+    {% endif %}
+{% endif %}
+
+{% set forwardTime = forwardTime|default(15, true) %}
+
+{% block head %}
+    {{ super() }}  <!-- Retain contents from the base template's 'head' block -->
+    {% if forward %}
+        {# Use the 'forward' variable's value for the URL in the meta tag to redirect after 15 seconds #}
+        <meta http-equiv="refresh" content="{{ forwardTime }};url={{ forward }}">
+    {% endif %}
+{% endblock %}
+
+
+{% block content %}
+
+
+<style>
+    .greenbar tr:nth-child(even) {
+        background-color: #e9f8fc; /* Adjust the greenbar color as desired */
+    }
+</style>
+
+<!-- Each request type is customized  This allows a single template for all form responses-->
+
+
+
+
+
+<!-- Semi Generic handler for a passed list of errors -->
+{% if responseType == "ErrorList" %}
+    <br><br>
+    {% with name='Errors Encountered' %}
+        {% include 'common/section_heading.html' %}
+    {% endwith %}    
+    <p>The Following errors were encountered when processing your request:</p>
+    <br>
+    <ul>
+        {% for error in data %}
+            <li>{{ error }} </li>
+        {% endfor %}
+    </ul>
+    <br>
+    <p>Please use your browser's "Back" button or click <a href="javascript:history.back(1)">here</a> to return to your form and correct the error(s).</p>
+
+
+
+
+
+{% elif responseType =='No User Found' %}    
+    <br><br>
+    {% with name='No User Found' %}
+        {% include 'common/section_heading.html' %}
+    {% endwith %}    
+    <p>We could not find a volunteer with the info you have provided.</p>
+    <br>
+    <p>Please use your browser's "Back" button or click <a href="javascript:history.back(1)">here</a> to return to the search and correct the error(s).</p>
+
+
+{% elif responseType =='Shift Submission Successful' %}    
+    <br><br>
+    {% with name='Time Submitted' %}
+        {% include 'common/section_heading.html' %}
+    {% endwith %}    
+    <p style="text-align:center;"><img src="../static/images/icon-success.svg" width="20%"></p>
+    <div id=hcenter>
+        <h1>Success!</h1>
+    </div>
+
+
+<!-- Specific Success Handler for local account creation -->
+{% elif responseType == "AccountCreated"%}
+    <br><br>
+    {% with name='Welcome!' %}
+        {% include 'common/section_heading.html' %}
+    {% endwith %}    
+    <p> Congratulations {{ data['first_name'] }}, you are now a Plank Owner of the National Museum of the Surface Navy at Battleship IOWA!  
+    You have been sent an email requesting verification of your email address.  
+    Once your email has been verified, your personalized certificate will be emailed to you.  Please be patient as it may take up to 24 hours for the certificate to be generated and emailed.</p>
+    <p> Thank you for your interest and support of the National Museum of the Surface Navy!</p>
+    <p>
+        <table style="margin-left:auto;margin-right:auto;">
+            <tr>
+                <td><a href="https://surfacenavymuseum.org" target="_parent"><button class="btn btn-primary btn-save orange_background mt-5">Return to the National Museum of the Surface Navy Site</button></a></td>
+            </tr>
+        </table>
+    </p>
+
+
+
+
+
+<!-- Specific Error Handler for local account creation -->
+{% elif responseType == "AccountCreationError"%}
+    <br><br>
+    {% with name='Something Went Wrong' %}
+        {% include 'common/section_heading.html' %}
+    {% endwith %} 
+    <p>The request encountered some errors while processing, below is some information below which may be helpful to our development and/or technical staff.  
+    If the error(s) persist, please contact our development department by emailing <a href = "mailto: development@surfacenavymuseum.org">development@surfacenavymuseum.org</a>.</p>
+    <br>
+    <hr>
+    {% if data.status_code == 201 %}
+        <p>The creation of your account in our Fedearated identity system (keycloak) seems to have succeeded</p>
+    {% elif data.status_code == 409 %}
+        <p>The identity federation service (keycloak) indicates a duplicate account with this email address: {{ data3.email }} </p>
+    {% else %}
+        <p>An unknown error has occured.  The system was unprepared to handle a response code: {{ data.status_code }}.  Please contact <a href = "mailto: development@surfacenavymuseum.org">development@surfacenavymuseum.org</a>
+        and incliude a screenshot or cut/paste of the information below.</p>
+    {% endif %}
+    <br>
+    <hr>
+    <br>
+    {% if data2.success == True %}
+        <p>The NMSN p2p system created the account successfully.  Additional messaging is below:</p>
+    {% else %}
+        <p>The NMSN p2p system encountered errors creating the account.  Messages that may help identify the problem are below:</p>
+    <br>
+    {% endif %}
+    <br>
+    {% for message in data2.messages %}
+        {{ message }}
+        <br>
+    {% endfor %}
+    <br>
+    <hr>
+    <br>
+    <table style="border:1px solid;" >
+    {% for key in data3 %}
+        {% if key != 'password' and key != 'confirm' %}
+            <tr>
+                <td style="border:1px solid; padding: 3px" >
+                {{ key }}:
+                </td>
+                <td style="border:1px solid; padding: 3px">
+                {{ data3[key] }}
+                </td>
+            </tr>
+        {% endif %}
+    {% endfor %}
+    </table>
+
+
+
+
+
+<!-- Specific Handler for Plankowner Certificate creation -->
+{% elif responseType == "PlankownerCertificate"%}
+    {% with name='Plankower Certificate Results' %}
+    {% include 'common/section_heading.html' %}
+    {% endwith %} 
+
+    {% if png_url == "Unavailable" %}
+        <div class="text-center"><p><b>Certificate was not uploaded.  No image available</b></div>
+    {% else %}
+        <div style="text-align:center;"><img src="{{ png_url }}" width="75%"></div> 
+        <p><b>PDF Certificate URL: </b><br>{{ pdf_url }}</p>
+    {% endif %} 
+    <br>
+    {% with name='Procesing Messages' %}
+    {% include 'common/section_heading.html' %}
+    {% endwith %} 
+    <ul>
+        {% for message in messages%}
+            <li>{{ message }}</li>
+        {% endfor %} 
+    </ul>
+    <br>
+    {% with name='Errors' %}
+    {% include 'common/section_heading.html' %}
+    {% endwith %} 
+    <ul>
+        {% for error in errors %}
+            <li>{{ error }}</li>
+        {% endfor %} 
+    </ul>   
+
+
+
+
+
+<!-- Specific Handler for JPJ Certificate creation -->
+{% elif responseType == "JPJCertificate"%}
+    {% with name='John Paul Jones Certificate Results' %}
+    {% include 'common/section_heading.html' %}
+    {% endwith %} 
+
+    {% if png_url == "Unavailable" %}
+        <div class="text-center"><p><b>Certificate was not uploaded.  No image available</b></div>
+    {% else %}
+        <div style="text-align:center;"><img src="{{ png_url }}" width="75%"></div> 
+        <p><b>PDF Certificate URL: </b><br>{{ pdf_url }}</p>
+    {% endif %} 
+    <br>
+    {% with name='Procesing Messages' %}
+    {% include 'common/section_heading.html' %}
+    {% endwith %} 
+    <ul>
+        {% for message in messages%}
+            <li>{{ message }}</li>
+        {% endfor %} 
+    </ul>
+    <br>
+    {% with name='Errors' %}
+    {% include 'common/section_heading.html' %}
+    {% endwith %} 
+    <ul>
+        {% for error in errors %}
+            <li>{{ error }}</li>
+        {% endfor %} 
+    </ul>    
+
+
+
+
+
+
+<!-- Specific response Handler for Email report creation -->
+{% elif responseType == "EmailReport" %}
+    {% with name='Last Login Report' %}
+    {% include 'common/section_heading.html' %}
+    {% endwith %}   
+
+    <B>Report Parameters:</B>
+    <table style="border:1px solid;" >
+        {% for key in data2 %}
+            {% if key != 'password' and key != 'confirm' %}
+                <tr>
+                    <td style="border:1px solid; padding: 3px" >
+                    {{ key }}:
+                    </td>
+                    <td style="border:1px solid; padding: 3px">
+                    {{ data2[key] }}
+                    </td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </table>    
+    <hr>
+    <table style="border:1px solid;" >
+        <thead>
+            <th style="border:1px solid; padding: 3px">Email Address</th>
+            <th style="border:1px solid; padding: 3px">First Name</th>
+            <th style="border:1px solid; padding: 3px">Last Name</th>
+            <th style="border:1px solid; padding: 3px; width: 20em">Last Login Date</th>
+        </thead>
+        {% for record in data %}
+            <tr>
+                <td style="border:1px solid; padding: 3px" > {{ record['username'] }}</td>
+                <td style="border:1px solid; padding: 3px" > {{ record['first_name'] }}</td>
+                <td style="border:1px solid; padding: 3px" > {{ record['last_name'] }}</td>
+                <td style="border:1px solid; padding: 3px; width: 20em" > {{ record['last_login_time'] }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+
+
+
+
+
+<!-- Specific response Handler for Email report creation -->
+{% elif responseType == "EoyReportComplete" %}
+    {% with name='EOY Report Generation Complete' %}
+    {% include 'common/section_heading.html' %}
+    {% endwith %}   
+
+	{% if 'encodedLetter' in data %}
+        You may be able to download the PDF by clicking <a href="data:application/pdf;base64,{{ data['encodedLetter'] }}" target="_blank">Here</a>
+        However, some browsers may block the download, and you will need to have popups enabled.  It might be easier to download the PDF on
+        the previous screen, to select "Email me a Copy", or to check Salesforce if the file was uploaded there.
+	{% else %} 
+		<p>Something went wrong, and the letter is not available for download here.  Please check Salesforce to see if the letter uploaded properly</p>
+	{% endif %}
+
+    {% with name='Procesing Messages' %}
+    {% include 'common/section_heading.html' %}
+    {% endwith %} 
+    <ul>
+        {% for message in data['messages'] %}
+            <li>{{ message }}</li>
+        {% endfor %} 
+    </ul>
+    <br>
+    {% with name='Errors' %}
+    {% include 'common/section_heading.html' %}
+    {% endwith %} 
+    <ul>
+        {% for error in data['errors'] %}
+            <li>{{ error }}</li>
+        {% endfor %} 
+    </ul>  
+
+
+
+
+
+<!-- Generic response Handler for Success -->
+{% elif responseType == "Success" %}
+    {% with name='Success!' %}
+    {% include 'common/section_heading.html' %}
+    {% endwith %}   
+
+    <p style="text-align:center;"><img src="../static/images/icon-success.svg" width="20%"></p>
+    <div id=hcenter>
+        <h1>Success!</h1>
+        <br>
+        <p>{{ data }}</p>
+    </div>
+    <div>
+        {{ data2 }}
+    </div>
+
+
+
+
+
+<!-- Specific Handler for List All Locks Report-->
+<!-- This handler has custom overrides in it -->
+{% elif responseType == "List Locks" %}
+    {% if callback is not defined %}
+        {% set callback = '/new-cylinder' %}    
+    {% endif %}
+    <div class="container-fluid mt-5">
+        <div class="row custom-row">
+            {% set colnum = 2 %}
+            {% include 'nav/ops_keys_sidebar.html' %}
+            <div class="col-lg-10 custom-col">
+                {%if sectionHeading is not defined %}
+                    {% set sectionHeading = 'Locks / Cylinders' %}
+                {% endif %}
+                {% with name=sectionHeading %}
+                {% include 'common/section_heading.html' %}
+                {% endwith %} 
+                <table style="border:1px solid;" id="sortabletable" class="greenbar">
+                    <thead>
+                        <th style="border:1px solid; padding: 1px; font-size: 9px; width: 13em"><a href="#" onclick="sortTable(0)">ID</a></th>
+                        <th style="border:1px solid; padding: 1px; font-size: 9px; width: 16em"><a href="#" onclick="sortTable(1)">Name</a></th>
+                        <th style="border:1px solid; padding: 1px; font-size: 9px;"><a href="#" onclick="sortTable(2)">Description</a></th>
+                        <th style="border:1px solid; padding: 1px; font-size: 9px; width: 9em;"><a href="#" onclick="sortTable(3)">Lock System</a></th>
+                        <th style="border:1px solid; padding: 1px; font-size: 9px;"><a href="#" onclick="sortTable(4)">Cylinder</a></th>
+                        <th style="border:1px solid; padding: 1px; font-size: 9px;"><a href="#" onclick="sortTable(5)">Location</a></th>
+                        <th style="border:1px solid; padding: 1px; font-size: 9px; width: 7em;"><a href="#" onclick="sortTable(5)">Bullseye</a></th>
+                        <th style="border:1px solid; padding: 1px; font-size: 9px;"><a href="#" onclick="sortTable(6)">Master</a></th>
+                        <th style="border:1px solid; padding: 1px; font-size: 9px;"><a href="#" onclick="sortTable(7)">Vehicle</a></th>
+                        <th style="border:1px solid; padding: 1px; font-size: 9px;"><a href="#" onclick="sortTable(8)">Modified by</a></th>
+                    </thead>
+                    {% for record in data2 %}
+                        <tr>
+                            {% if '?' in callback %}
+                                <td style="border:1px solid; padding: 1px; font-size: 9px;"><a href='{{ callback }}&sfid={{ record.Id }}'>{{ record.Id }}</a></td>
+                            {% else %}
+                                <td style="border:1px solid; padding: 1px; font-size: 9px;"><a href='{{ callback }}?sfid={{ record.Id }}'>{{ record.Id }}</a></td>
+                            {% endif %}                                
+                            <td style="border:1px solid; padding: 1px; font-size: 9px;">{{ record['Name'] }}</td>
+                            <td style="border:1px solid; padding: 1px; font-size: 9px;">{{ record['Description__c'] }}</td>
+                            <td style="border:1px solid; padding: 1px; font-size: 9px; width: 5em;">{{ record['Lock_System__c'] }}</td>
+                            <td style="border:1px solid; padding: 1px; font-size: 9px;">{{ record['Cylinder_Number__c'] }}</td>
+                            <td style="border:1px solid; padding: 1px; font-size: 9px;">{{ record['Location__c'] }}</td>
+                            <td style="border:1px solid; padding: 1px; font-size: 9px; width: 5em;">{{ record['Bullseye__c'] }}</td>
+                            <td style="border:1px solid; padding: 1px; font-size: 9px;">{{ record['Master_Submaster__c'] }}</td>
+                            <td style="border:1px solid; padding: 1px; font-size: 9px;">{{ record['Vehicle__c'] }}</td>
+                            <td style="border:1px solid; padding: 1px; font-size: 9px;">{{ record['LastModifiedBy']['Name'] }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>    
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+<!-- Specific Handler for List All Keys Report-->
+<!-- This handler has custom overrides in it -->
+{% elif responseType == "List Keys" %}
+    {%if sectionHeading is not defined %}
+        {% set sectionHeading = 'Keys' %}
+    {% endif %}
+    {% with name=sectionHeading %}
+    {% include 'common/section_heading.html' %}
+    {% endwith %} 
+    {% if callback is not defined %}
+        {% set callback = '/edit-key' %}
+    {% endif %}
+
+    <table style="border:1px solid;" id="sortabletable" class="greenbar">
+        <thead>
+            <th style="border:1px solid; padding: 1px; font-size: 11px; width: 13em"><a href="#" onclick="sortTable(0)">ID</a></th>
+            <th style="border:1px solid; padding: 1px; font-size: 11px; width: 13em"><a href="#" onclick="sortTable(1)">Name</a></th>
+            <th style="border:1px solid; padding: 1px; font-size: 11px; width: 18em"><a href="#" onclick="sortTable(2)">Lock Name</a></th>
+            <th style="border:1px solid; padding: 1px; font-size: 11px; width: 7em"><a href="#" onclick="sortTable(3)">Cylinder #</a></th>
+            <th style="border:1px solid; padding: 1px; font-size: 11px; width: 7em"><a href="#" onclick="sortTable(4)">Key Number</a></th>
+            <th style="border:1px solid; padding: 1px; font-size: 11px; width: 10em"><a href="#" onclick="sortTable(5)">Status</a></th>
+            <th style="border:1px solid; padding: 1px; font-size: 11px; width: 13em"><a href="#" onclick="sortTable(6)">Modified by</a></th>
+            <th style="border:1px solid; padding: 1px; font-size: 11px; width: 10em"><a href="#" onclick="sortTable(7)">Assignments</a></th>            
+
+        </thead>
+        {% for record in data2 %}
+            <tr>
+                {% if '?' in callback %}
+                    <td style="border:1px solid; padding: 1px; font-size: 9px;"><a href='{{ callback }}&sfid={{ record.Id }}'>{{ record.Id }}</a></td>
+                {% else %}
+                    <td style="border:1px solid; padding: 1px; font-size: 9px;"><a href='{{ callback }}?sfid={{ record.Id }}'>{{ record.Id }}</a></td>
+                {% endif %}            
+                <td style="border:1px solid; padding: 1px; font-size: 11px;">{{ record['Name'] }}</td>
+                <td style="border:1px solid; padding: 1px; font-size: 11px;">{{ record['Lock_Name_2__c'] }}</td>
+                <td style="border:1px solid; padding: 1px; font-size: 11px;">{{ record['Cylinder_Number__c'] }}</td>
+                <td style="border:1px solid; padding: 1px; font-size: 11px;">{{ record['Key_Number__c'] | asint }}</td>
+                <td style="border:1px solid; padding: 1px; font-size: 11px;">{{ record['Status__c'] }}</td>
+                <td style="border:1px solid; padding: 1px; font-size: 11px;">{{ record['LastModifiedBy']['Name'] }}</td>
+                <td style="border:1px solid; padding: 1px; font-size: 11px;"><a href='/key-assignment?key={{ record.Id }}'>Assignments</a></td>
+
+            </tr>
+        {% endfor %}
+    </table>            
+
+
+
+
+
+<!-- Specific Handler for List Key Assignments-->
+{% elif responseType == "List Assignments" %}
+    {%if sectionHeading is not defined %}
+        {% set sectionHeading = 'Key Assignments' %}
+    {% endif %}
+    {% with name=sectionHeading %}
+    {% include 'common/section_heading.html' %}
+    {% endwith %} 
+    {% if callback is not defined %}
+        {% set callback = '/key-assignment' %}
+    {% endif %}
+
+    <style>
+        .assignment-list {
+            border: 1px solid;
+            padding: 1px;
+            font-size: 11px;
+            padding-right: 20px;
+        }
+
+    </style>
+
+    <table style="border:1px solid;" id="sortabletable" class="greenbar">
+        <thead>
+            <th class="assignment-list"><a href="#" onclick="sortTable(0)">SFID</a></th>
+            <th class="assignment-list"><a href="#" onclick="sortTable(1)">Assignment ID</a></th>
+            <th class="assignment-list"><a href="#" onclick="sortTable(2)">Asignee</a></th>
+            <th class="assignment-list"><a href="#" onclick="sortTable(3)">Lock Name</a></th>
+            <th class="assignment-list"><a href="#" onclick="sortTable(4)">Cylinder</a></th>
+            <th class="assignment-list"><a href="#" onclick="sortTable(5)">Key Number</a></th>   
+            <th class="assignment-list"><a href="#" onclick="sortTable(5)">Asssigned Date</a></th>          
+            <th class="assignment-list"><a href="#" onclick="sortTable(5)">Return Date</a></th>          
+        </thead>
+
+        {% for record in data2 %}
+            <tr>
+                {% if '?' in returnurl %}
+                    <td class="assignment-list"><a href='{{ callback }}&assignment={{ record.Id }}'>{{ record.Id }}</a></td>
+                {% else %}
+                    <td class="assignment-list"><a href='{{ callback }}?assignment={{ record.Id }}'>{{ record.Id }}</a></td>
+                {% endif %}         
+                <td class="assignment-list">{{ record.Name }}</td>
+                <td class="assignment-list">{{ record.Assignee_First_Name__c }}  {{ record.Assignee_Last_Name__c }}</td>
+                <td class="assignment-list">{{ record.Lock_Name__c }}</td>
+                <td class="assignment-list">{{ record.Cylinder_Number__c }}</td>
+                <td class="assignment-list">{{ record.Key_Number__c | asint }}</td>
+                <td class="assignment-list">{{ record.Issue_Date__c  }}</td>
+                <td class="assignment-list">{{ record.Return_Date__c }}</td>
+            </tr>
+        {% endfor %}
+    </table> 
+
+
+
+
+<!-- Specific Handler for 1MC announcements-->
+{% elif responseType == "1mcannoucement" %}
+    {% with name='1MC Announcement Results' %}
+    {% include 'common/section_heading.html' %}
+    {% endwith %}   
+
+    {% if data['isProfane'] %}
+        <p style="text-align:center;"><img src="../static/images/icon-error.svg" width="20%"></p>
+        <div id=hcenter>
+            <h1>FAILED!</h1>
+            <p>your message: <b>{{ data['announcement'] }}</b> contains profanity and will not be sent to the 1MC</p>
+            <p><b>This event has been loggged and reported!</b></p>
+        </div>    
+    {% else %}
+        <p style="text-align:center;"><img src="../static/images/icon-success.svg" width="20%"></p>
+        <div id=hcenter>
+            <h1>Success!</h1>
+            <p>{{ data['announcement'] }} <br> has been sent to the 1MC</p>
+        </div>
+    {% endif %}
+
+
+
+
+    <!-- Generic response Handler for Errors -->
+{% elif responseType == "Error" %}
+{% with name='System Failure!' %}
+{% include 'common/section_heading.html' %}
+{% endwith %}   
+
+<p style="text-align:center;"><img src="../static/images/icon-error.svg" width="20%"></p>
+<div id=hcenter>
+    <h1>Error!</h1>
+    <p><b>{{ data }}</b></p>
+</div>
+<hr>
+<div>
+    {{ data2|safe }}
+</div>
+<hr>
+<div>
+    {{ data3|safe }}
+    <hr>
+</div>
+
+
+
+
+
+<!-- No request type was given, so we react generically -->
+{% else %}
+    <br><br>
+    {% with name='Generic Form Response' %}
+        {% include 'common/section_heading.html' %}
+    {% endwith %}
+    <B>Response Type: </B> {{ responseType }} 
+    <br>
+    <br>
+    {{ data }}
+    <hr>
+    {{ data2 }}
+    <hr>
+    {{ data3 }}
+    <br><br>
+
+
+
+{% endif %}
+
+
+
+
+<script>
+    function sortTable(columnIndex) {
+        var table, rows, switching, i, x, y, shouldSwitch;
+        table = document.getElementById("sortabletable");
+        switching = true;
+
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("TD")[columnIndex];
+                y = rows[i + 1].getElementsByTagName("TD")[columnIndex];
+
+                if (isNaN(x.innerHTML)) {
+                    // For non-numeric columns, perform a case-insensitive comparison
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else {
+                    // For numeric columns, perform a numeric comparison
+                    if (parseInt(x.innerHTML) > parseInt(y.innerHTML)) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+            }
+        }
+    }
+</script>
+
+
+
+
+
+{% endblock %}
