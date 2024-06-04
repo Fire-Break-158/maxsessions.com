@@ -157,30 +157,37 @@ def dockerStatus():
             removeContainer(Short_Id)
             containers = getContainers()
             return render_template('technology/docker_containers.html', containers=containers)
-    
+        else:
+            containers = getContainers()
+            return render_template('technology/docker_containers.html', containers=containers)
 
 
 @app.route('/containercreator', methods = ['GET', 'POST'])
 def containerCreator():
     if request.method == 'GET':
-        return render_template('technology/container_creator.html')
+        return render_template('technology/docker_cmd.html')
     if request.method == 'POST':
         data = request.form.to_dict()
-#        if data['submit'] == 'Execute':
-#            if 'command' not in request.form:
-#                return "No command provided", 400
-#
-#
-#            command = request.form['command']
-#
-#
-#            try:
-#                result = subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
-#                output = result.decode('utf-8')
-#            except subprocess.CalledProcessError as e:
-#                output = e.output.decode('utf-8')
-#            return render_template('technology/container_creator.html', output=output)
-        if data['submit'] == 'Docker Run':
+
+        if data['submit'] == 'CMD Checked':
+            containerLoc = data['containerlocation']
+            CMDLoc = data['containerlocation'] + '/CMD'
+            try:
+                with open(CMDLoc, 'r') as file:
+                    CMDCont = file.read()
+                return render_template('technology/container_creator.html', containerLoc = containerLoc, CMDCont = CMDCont)
+            except FileNotFoundError:
+                return render_template('technology/container_creator.html', containerLoc = containerLoc)
+
+        
+
+        elif data['submit'] == 'Run Existing CMD':
+            CMDCont = data['CMDCont']
+            subprocess.run([CMDCont], shell=True)
+            return render_template('technology/docker_cmd.html')
+
+
+        elif data['submit'] == 'Docker Run':
             name = ''
             pull = ''
             tag = ''
@@ -200,70 +207,82 @@ def containerCreator():
             currentTime = datetime.now()
             formattedTime = currentTime.strftime("%Y-%m-%d-%H-%M-%S")
             CMDBackup = f'CMD{formattedTime}'
-            CMDcont = 'docker run '
+            CMDCont = 'docker run '
 
 
-            if 'image' in data and data['image'] and 'containerlocation' in data and data['containerlocation']:
+            if 'image' in data and data['image'] and 'containerLoc' in data and data['containerLoc']:
                 image = ' ' + data['image']
                 pull = '--pull always'
-                CMDcont += pull
-                containerLocation = data['containerlocation']
+                CMDCont += pull
+                containerLoc = data['containerLoc']
                 if '--name' in data and data['--name']:
-                    name = ' --name "' + data['--name'] + '" '
-                    CMDcont += name
+                    name = ' --name "' + data['--name'] + '"'
+                    CMDCont += name
                 if '-v1' in data and data['-v1']:
                     v1 = ' -v ' + data['-v1']
-                    CMDcont += v1
+                    CMDCont += v1
                 if '-v12' in data and data['-v12']:
                     v12 = ':' + data['-v12'] + ' '
-                    CMDcont += v12
+                    CMDCont += v12
                 if '-v2' in data and data['-v2']:
                     v2 = '-v ' + data['-v2']
-                    CMDcont += v2
+                    CMDCont += v2
                 if '-v22' in data and data['-v22']:
                     v22 = ':' + data['-v22'] + ' '
-                    CMDcont += v22
+                    CMDCont += v22
                 if '-v3' in data and data['-v3']:
                     v3 = '-v ' + data['-v3']
-                    CMDcont += v3
+                    CMDCont += v3
                 if '-v32' in data and data['-v32']:
                     v32 = ':' + data['-v32'] + ' '
-                    CMDcont += v32
+                    CMDCont += v32
                 if '-v4' in data and data['-v4']:
                     v4 = '-v ' + data['-v4']
-                    CMDcont += v4
+                    CMDCont += v4
                 if '-v42' in data and data['-v42']:
                     v42 = ':' + data['-v42'] + ' '
-                    CMDcont += v42
+                    CMDCont += v42
                 if '-d' in data and data['-d']:
                     d = ' -d'
-                    CMDcont += d
+                    CMDCont += d
                 if '-it' in data and data['-it']:
                     it = ' -it'
-                    CMDcont += it
+                    CMDCont += it
                 if 'exitoption' in data and data['exitoption'] and data['exitoption'] == '--rm':
                     rm = ' --rm'
-                    CMDcont += rm
+                    CMDCont += rm
                 if 'exitoption' in data and data['exitoption'] and data['exitoption'] == '--restart':
                     restart = ' --restart'
-                    CMDcont += restart
-                CMDcont += image
+                    CMDCont += restart
+                CMDCont += image
                 if 'tag' in data and data['tag']:
                     tag = ':' + data['tag']
-                    CMDcont += tag
+                    CMDCont += tag
                 if 'latest' in data and data['latest']:
                     latest = ':latest'
-                    CMDcont += latest
+                    CMDCont += latest
+                
+                
+                CMDCont = CMDCont.strip()
 
 
+                if 'CMDoption' in data and data['CMDoption'] and  data['CMDoption'] == 'dontsave':
+                    subprocess.run([CMDCont], shell=True)
+                    return render_template('technology/docker_cmd.html')
                 if 'CMDoption' in data and data['CMDoption'] and  data['CMDoption'] == 'save':
-                    saveCom = f"cd {containerLocation} && echo {CMDcont} > CMD"
-                    subprocess.run([saveCom], shell=True)
-                    subprocess.run([CMDcont], shell=True)
+                    CMDLoc = containerLoc + '/CMD'
+                    with open(CMDLoc, 'w') as file:
+                        file.write(CMDCont)
+                    subprocess.run([CMDCont], shell=True)
+                    return render_template('technology/docker_cmd.html')
                 elif 'CMDoption' in data and data['CMDoption'] and  data['CMDoption'] == 'backup':
-                    overwriteCom = f'cd {containerLocation} && mv CMD {CMDBackup} && echo {CMDcont} > f"CMD"'
-                    subprocess.run([overwriteCom], shell=True)
-                    subprocess.run([CMDcont], shell=True)
+                    renameCom = f'cd {containerLoc} && mv CMD {CMDBackup}'
+                    CMDLoc = containerLoc + '/CMD'
+                    with open(CMDLoc, 'w') as file:
+                        file.write(CMDCont)
+                    subprocess.run([renameCom], shell=True)
+                    subprocess.run([CMDCont], shell=True)
+                    return render_template('technology/docker_cmd.html')
 
                 
             else:
@@ -271,7 +290,7 @@ def containerCreator():
                 return render_template('response.html', responseType = responseType)
 
             
-            return render_template('technology/container_creator.html')
+            
 
 
 
