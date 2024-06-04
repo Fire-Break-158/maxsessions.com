@@ -207,13 +207,13 @@ def containerCreator():
             currentTime = datetime.now()
             formattedTime = currentTime.strftime("%Y-%m-%d-%H-%M-%S")
             CMDBackup = f'CMD{formattedTime}'
-            CMDCont = 'docker run '
+            CMDCont = 'docker run'
 
 
             if 'image' in data and data['image'] and 'containerLoc' in data and data['containerLoc']:
                 image = ' ' + data['image']
-                pull = '--pull always'
-                CMDCont += pull
+                #pull = ' --pull always'
+                #CMDCont += pull
                 containerLoc = data['containerLoc']
                 if '--name' in data and data['--name']:
                     name = ' --name "' + data['--name'] + '"'
@@ -273,6 +273,7 @@ def containerCreator():
                     CMDLoc = containerLoc + '/CMD'
                     with open(CMDLoc, 'w') as file:
                         file.write(CMDCont)
+                    print(CMDCont)
                     subprocess.run([CMDCont], shell=True)
                     return render_template('technology/docker_cmd.html')
                 elif 'CMDoption' in data and data['CMDoption'] and  data['CMDoption'] == 'backup':

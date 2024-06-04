@@ -1,5 +1,1 @@
-docker run
-    --name maxsessions.com
-    --rm
-    -d
-    maxsessions.com
+docker run --name "maxsessions.com" -d -it maxsessionssite
