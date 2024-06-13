@@ -29,20 +29,36 @@
         width:300px;
         text-align:center;
     }
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+        gap: 25px;
+    }
+
+    .grid-item {
+        width: 100%;
+        height: 60px;
+    }
+
 </style>
 
 
 
 <br>
 
-<form action="" method="POST">
-    <div>
-        <input type="text" name="containerlocation" placeholder="Docker container files path (Required)" style="width: 305px;" required>
-    </div>
-    <br>
-    <br>
-    <button type="submit" name="submit" value='CMD Checked' class="btn btn-primary btn-save orange_background" style=" height: 50px;">Docker Run</button>
-</form>
+
+<div class="grid-container">
+    {% for item in directories %}
+        <div class="grid-item">
+            <form method="POST" action="">
+                <input type="hidden" name="path" value="{{ path }}">
+                <input type="hidden" name="containerlocation" value="{{ item }}">
+                <button id="submit" type="submit" name="submit" value='Directory Selected' style="width: 100%; height: 50px; font-size: 20px;">{{ item }}</button>
+            </form>
+        </div>
+    {% endfor %}
+</div>
 
 
 

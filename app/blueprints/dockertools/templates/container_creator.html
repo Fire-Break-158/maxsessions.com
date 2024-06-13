@@ -56,6 +56,15 @@
 <form action="" method="POST">
     <br>
     <div>
+        <b>
+            Docker Files Location
+        </b>
+    </div>
+    <div>
+        {{ containerLoc }}
+    </div>
+    <br>
+    <div>
         <input type="text" name="--name" placeholder="Container name (no spaces)" style="width: 215px;">
     </div>
     <br>
@@ -89,6 +98,20 @@
         <br>
         <input type="text" name="-v4" placeholder="External path to directory/file" style="width: 220px;">
         <input type="text" name="-v42" placeholder="Internal path to directory/file" style="width: 215px;">
+    </div>
+    <br>
+    <div>
+        <input type="text" name="-p1" placeholder="Machine port" style="width: 220px;">
+        <input type="text" name="-p12" placeholder="Container port" style="width: 215px;">
+        <br>
+        <input type="text" name="-p2" placeholder="Machine port" style="width: 220px;">
+        <input type="text" name="-p22" placeholder="Container port" style="width: 215px;">
+        <br>
+        <input type="text" name="-p3" placeholder="Machine port" style="width: 220px;">
+        <input type="text" name="-p32" placeholder="Container port" style="width: 215px;">
+        <br>
+        <input type="text" name="-p4" placeholder="Machine port" style="width: 220px;">
+        <input type="text" name="-p42" placeholder="Container port" style="width: 215px;">
     </div>
     <br>
     <div>

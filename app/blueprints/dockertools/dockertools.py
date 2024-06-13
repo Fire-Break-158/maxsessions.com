@@ -1,7 +1,9 @@
 import docker
 import datetime
 import subprocess
+import os
 
+from pathlib import Path
 from flask import (
     Blueprint, 
     render_template, 
@@ -143,19 +145,30 @@ def dockerStatus():
 @dockertools.route('/docker-container-creator', methods = ['GET', 'POST'])
 def containerCreator():
     if request.method == 'GET':
-        return render_template('docker_cmd.html')
+        path=os.getenv('BASEDIR')
+        def list_directories(path):
+            try:
+                directories = [item.name for item in Path(path).iterdir() if item.is_dir()]
+                return directories
+            except Exception as e:
+                print(f"An error occurred: {e}")
+                return []
+        directories = list_directories(path)
+        return render_template('docker_cmd.html', directories=directories, path=path)
     if request.method == 'POST':
         data = request.form.to_dict()
 
-        if data['submit'] == 'CMD Checked':
-            containerLoc = data['containerlocation']
-            CMDLoc = data['containerlocation'] + '/CMD'
+        if data['submit'] == 'Directory Selected':
+            containerLoc = data['path'] + '/' + data['containerlocation']
+            print(containerLoc)
+            CMDLoc = containerLoc + '/CMD'
+            print(CMDLoc)
             try:
                 with open(CMDLoc, 'r') as file:
                     CMDCont = file.read()
-                return render_template('container_creator.html', containerLoc = containerLoc, CMDCont = CMDCont)
+                return render_template('container_creator.html', containerLoc=containerLoc, CMDCont=CMDCont)
             except FileNotFoundError:
-                return render_template('container_creator.html', containerLoc = containerLoc)
+                return render_template('container_creator.html', containerLoc=containerLoc)
 
         
 
@@ -220,6 +233,30 @@ def containerCreator():
                 if '-v42' in data and data['-v42']:
                     v42 = ':' + data['-v42'] + ' '
                     CMDCont += v42
+                if '-p1' in data and data['-p1']:
+                    p1 = ' -p ' + data['-p1']
+                    CMDCont += p1
+                if '-p12' in data and data['-p12']:
+                    p12 = ':' + data['-p12'] + ' '
+                    CMDCont += p12
+                if '-p2' in data and data['-p2']:
+                    p2 = '-p ' + data['-p2']
+                    CMDCont += p2
+                if '-p22' in data and data['-p22']:
+                    p22 = ':' + data['-p22'] + ' '
+                    CMDCont += p22
+                if '-p3' in data and data['-p3']:
+                    p3 = '-p ' + data['-p3']
+                    CMDCont += p3
+                if '-p32' in data and data['-p32']:
+                    p32 = ':' + data['-p32'] + ' '
+                    CMDCont += p32
+                if '-p4' in data and data['-p4']:
+                    p4 = '-p ' + data['-p4']
+                    CMDCont += p4
+                if '-p42' in data and data['-p42']:
+                    p42 = ':' + data['-p42'] + ' '
+                    CMDCont += p42
                 if '-d' in data and data['-d']:
                     d = ' -d'
                     CMDCont += d
