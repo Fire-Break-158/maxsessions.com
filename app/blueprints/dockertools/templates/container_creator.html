@@ -40,13 +40,10 @@
 
     <form action="" method="POST">
         <div>
-            <b>
-                Container Files Location:
-            </b>
-            {{ containerLoc }}
-        </div>
-        <div>
             <input type="hidden" name="CMDCont" value="{{ CMDCont }}">
+            <div>
+                {{ CMDCont }}
+            </div>
             <button type="submit" name="submit" value='Run Existing CMD' class="btn btn-primary btn-save orange_background" style=" height: 50px;">Run Existing CMD</button>
         </div>
     </form>
