@@ -1,0 +1,9 @@
+    <div class="copyright">
+      <div class="container">
+        <img src="{{ url_for('static', filename='images/ship.png') }}" width="20%">
+      </div>
+      <strong><span>Max Sessions <span id="year"></span></span></strong>. All Rights Reserved
+    </div>
+  <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+  </script>

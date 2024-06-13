@@ -1,0 +1,329 @@
+
+.icon-holder-custom1 {
+    width: 16px;                    /* Set the width of the icon */
+    height: 16px;                   /* Set the height of the icon */
+    display: inline-block;          /* Ensures the background image is displayed */
+    background-repeat: no-repeat;   /* Prevents the icon from repeating */
+    background-size: cover;         /* Ensures the background covers the element */
+    background-position: center;    /* Centers the background image within the element */
+    border-radius: 0 !important;    /* Ensures there are no rounded corners */
+    padding: 0;                     /* No padding to affect the dimensions */
+    margin: 0;                      /* No margin to affect placement */
+}
+
+/*  A   */
+.icon-about-me {
+    background-image: url("/static/images/icons/icon-about-me.svg");
+}
+
+.icon-add-key {
+    background-image: url("/static/images/icons/icon-add-key.svg");
+}
+
+/*  B   */
+.icon-bug {
+    background-image: url("/static/images/icons/icon-bug.svg");
+    height: 18px;
+    width: 16px;
+}
+
+/*  C   */
+.icon-cal_clock {
+    background-image: url("/static/images/icons/icon-cal_clock.svg");
+}
+
+.icon-cassette {
+    background-image: url("/static/images/icons/icon-cassette.svg");
+    height: 12px;
+    width: 16px;
+}
+
+.icon-certificate {
+    background-image: url("/static/images/icons/icon-certificate.svg");
+    height: 12px;
+    width: 16px;
+}
+
+.icon-clockdate {
+    background-image: url("/static/images/icons/icon-clockdate.svg");
+}
+
+.icon-commands {
+    background-image: url("/static/images/icons/icon-commands.svg");
+}
+
+/*  D   */
+.icon-dashboard {
+    background-image: url("/static/images/icons/icon-dashboard.svg");
+}
+
+.icon-database-reload {
+    background-image: url("/static/images/icons/icon-database-reload.svg");
+}
+
+.icon-databroom {
+    background-image: url("/static/images/icons/icon-data-broom.svg");
+}
+
+.icon-dataentry {
+    background-image: url("/static/images/icons/icon-dataentry.svg");
+}
+
+.icon-datatools {
+    background-image: url("/static/images/icons/icon-datatools.svg");
+    width: 16px;
+    height: 20px;
+}
+
+.icon-development {
+    background-image: url("/static/images/icons/icon-development.svg");
+    height: 17px;
+    width: 21px;
+}
+
+.icon-docker {
+    background-image: url("/static/images/icons/icon-docker.svg");
+    height: 45px;
+    width: 45px;
+}
+
+.icon-docker-gear {
+    background-image: url("/static/images/icons/icon-docker-gear.svg");
+    height: 45px;
+    width: 45px;
+}
+
+.icon-docker-plus {
+    background-image: url("/static/images/icons/icon-docker-plus.svg");
+    height: 45px;
+    width: 45px;
+}
+
+/*  E   */
+.icon-eyeball {
+    background-image: url("/static/images/icons/icon-eyeball.svg");
+}
+
+.icon-edit-key {
+    background-image: url("/static/images/icons/icon-edit-key.svg");
+}
+
+.icon-email-login {
+    background-image: url("/static/images/icons/icon-email_login.svg");
+}
+
+
+/*  F   */
+.icon-fulfillment {
+    background-image: url("/static/images/icons/icon-fulfillment.svg");
+    height: 20px;
+    width: 16px;
+}
+
+/*  G   */
+.icon-graph {
+    background-image: url("/static/images/icons/icon-chart.svg");
+}
+
+/*  H   */
+.icon-hammer {
+    background-image: url("/static/images/icons/icon-hammer.svg");
+}
+
+/*  I   */
+.icon-idcard {
+    background-image: url("/static/images/icons/icon-card.svg");
+    width: 21px;
+    height: 14px;      
+}
+
+.icon-insight {
+    background-image: url("/static/images/icons/icon-insight.svg");
+    height: 22px;
+}
+
+.icon-iva {
+    background-image: url("/static/images/icons/icon-iva.svg");
+}
+
+/*  J   */
+.icon-json1 {
+    background-image: url("/static/images/icons/icon-json1.svg");
+}
+
+/*  K   */
+.icon-key {
+    background-image: url("/static/images/icons/icon-key.svg");
+}
+
+.icon-key-assignment {
+    background-image: url("/static/images/icons/icon-key-assignment.svg");
+    height: 13px;
+    width: 21px;
+}
+
+.icon-keys {
+    background-image: url("/static/images/icons/icon-keys.svg");
+}
+
+/*  L   */
+.icon-letter {
+    background-image: url("/static/images/icons/icon-letter.svg");
+}
+
+.icon-letters {
+    background-image: url("/static/images/icons/icon-letters.svg");
+    width: 16px;
+    height: 19px;  
+}
+
+.icon-letterbatch {
+    background-image: url("/static/images/icons/icon-letterbatch.svg");
+}
+
+.icon-lettercheck {
+    background-image: url("/static/images/icons/icon-lettercheck.svg");
+}
+
+.icon-list {
+    background-image: url("/static/images/icons/icon-list.svg");
+}
+
+.icon-lock-cylinder-1 {
+    background-image: url("/static/images/icons/icon-lock-cylinder-1.svg");
+}
+
+/*  M   */
+.icon-magic2 {
+    background-image: url("/static/images/icons/icon-magic2.svg");
+}
+
+.icon-megaphone {
+    background-image: url("/static/images/icons/icon-megaphone.svg");
+}
+
+.icon-membership {
+    background-image: url("/static/images/icons/icon-membership.svg");
+}
+
+.icon-museum {
+    background-image: url("/static/images/icons/icon-museum.svg");
+}
+
+/*  N   */
+.icon-navy-1 {
+    background-image: url("/static/images/icons/icon-navy-1.svg");
+}
+
+.icon-nmsnlogo {
+    background-image: url("/static/images/icons/icon-nmsnlogo.svg");
+}
+
+/*  O   */
+
+/*  P   */
+.icon-partnership {
+    background-image: url("/static/images/icons/icon-partnership.svg");
+}
+
+.icon-people {
+    background-image: url("/static/images/icons/icon-people.svg");
+}
+
+.icon-people2 {
+    background-image: url("/static/images/icons/icon-people2.svg");
+}
+
+.icon-personsearch {
+    background-image: url("/static/images/icons/icon-personsearch.svg");
+}
+
+.icon-points1 {
+    background-image: url("/static/images/icons/icon-points1.svg");
+}
+
+.icon-profile {
+    background-image: url("/static/images/icons/icon-profile.svg");
+}
+
+/*  Q   */
+
+/*  R   */
+.icon-refresh {
+    background-image: url("/static/images/icons/icon-refresh.svg");
+}
+
+.icon-report1 {
+    background-image: url("/static/images/icons/icon-report1.svg");
+}
+
+/*  S   */
+.icon-search {
+    background-image: url("/static/images/icons/icon-search.svg"); 
+    width: 18px;
+    height: 21px;      
+}
+
+.icon-service {
+    background-image: url("/static/images/icons/icon-service.svg");
+}
+
+.icon-settings {
+    background-image: url("/static/images/icons/icon-settings.svg");
+}
+
+.icon-sherlock {
+    background-image: url("/static/images/icons/icon-sherlock.svg");
+}
+
+/*  T   */
+.icon-text_speech {
+    background-image: url("/static/images/icons/icon-text_speech.svg");
+    width: 18px;
+    height: 16px;
+}
+
+.icon-timeclock {
+    background-image: url("/static/images/icons/icon-timeclock.svg");
+    width: 13px;
+    height: 20px;
+}
+
+.icon-toolbox {
+    background-image: url("/static/images/icons/icon-tools.svg");
+}
+
+/*  U   */
+
+/*  V   */
+.icon-volunteer {
+    background-image: url("/static/images/icons/icon-volunteer.svg");
+}
+
+/*  W   */
+.icon-wand {
+    background-image: url("/static/images/icons/icon-wand.svg");
+}
+
+.icon-wav {
+    background-image: url("/static/images/icons/icon-wav.svg");
+    height: 18px;
+    width: 14px;
+}
+
+.icon-webhook {
+    background-image: url("/static/images/icons/icon-webhook.svg");
+}
+
+.icon-wrench {
+    background-image: url("/static/images/icons/icon-wrench.svg");
+}
+
+/*  X   */
+
+/*  Y   */
+.icon-year {
+    background-image: url("/static/images/icons/icon-year.svg");
+}
+
+/*  Z   */
