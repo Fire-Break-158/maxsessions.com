@@ -1,6 +1,7 @@
 FROM python:3.8-slim-buster
 COPY . /app
 WORKDIR /app
+RUN mkdir -p /app/dockerfiles
 RUN apt-get -y update
 RUN apt-get -y install gcc
 RUN apt-get -y install g++
