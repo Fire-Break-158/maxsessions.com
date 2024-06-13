@@ -1,0 +1,181 @@
+{% extends 'main_menu.html' %}
+
+{% block content %}
+
+<!-- JavaScript -->
+
+<script type="text/javascript">// <![CDATA[
+    function loading(){
+        $("#loading").show();
+        $("#content").hide();       
+    }
+// ]]></script>
+
+
+<!-- CSS -->
+
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 15px;
+    }
+
+    table tr:nth-child(even) {
+        background-color: #e9f8fc; /* Adjust the greenbar color as desired */
+    }
+
+    table th,
+    table td {
+        padding: 3px;
+        text-align: left;
+    }
+
+    .btn-custom {
+      text-transform: none; /* Set the text transform to none */
+    }
+
+    div#loading {
+        display: none;
+        cursor: wait;
+    }
+
+    div#hcenter {
+        margin-left:auto;
+        margin-right:auto;
+        width:300px;
+        text-align:center;
+    }
+
+    .right-column {
+        float: right;
+        width: 30%;  }
+      
+      td {
+        padding: 10px;  
+    }
+
+    .advanced-options {
+        display: none;
+    }
+
+    .fixed-height {
+        height: 95px;  
+    }
+
+</style>
+
+
+<!-- HTML & Jinja Body -->
+
+<div id=content></div>
+    <table>
+        {% for container in container %}
+        <tr>
+            <th>
+                Container Name:
+            </th>
+            <td style="width:20px">&nbsp;</td>
+            <td>
+                {{ container.Name }}
+            </td>
+        </tr>    
+        <tr>
+            <th>
+                Container Image:
+            </th>
+            <td style="width:20px">&nbsp;</td>
+            <td>
+                {{ container.Image }}
+            </td>
+        </tr>    
+        <tr>
+            <th>
+                Short Container ID:
+            </th>
+            <td style="width:20px">&nbsp;</td>
+            <td>
+                {{ container.Short_Id }}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Status:
+            </th>
+            <td style="width:20px">&nbsp;</td>
+            <td>
+            {% if container.Status == 'running' %}
+                <img src="{{ url_for('dockertools.static', filename='images/GreenDot.svg') }}" width="2%">
+            {% elif container.Status == 'exited' %}
+                <img src="{{ url_for('dockertools.static', filename='images/RedDot.svg') }}" width="2%">
+            {% elif container.Status == 'restarting' %}
+                <img src="{{ url_for('dockertools.static', filename='images/YellowDot.svg') }}" width="2%">
+            {% elif container.Status == 'paused' %}
+                <img src="{{ url_for('dockertools.static', filename='images/YellowDot.svg') }}" width="2%">
+            {% elif container.Status == 'created' %}
+                <img src="{{ url_for('dockertools.static', filename='images/YellowDot.svg') }}" width="2%">
+            {% endif %}
+            {{ container.Status }}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Options:
+            </th>
+            <td style="width:5px">&nbsp;</td>
+            <td>
+                {% if container.Status == 'running' %}
+                    <form method="POST" action="" onsubmit=loading()>
+                        <input type="hidden" name="Short_Id" value="{{ container['Short_Id'] }}">
+                        <input type="hidden" name="Image" value="{{ container['Image'] }}">
+                        <input type="hidden" name="Name" value="{{ container['Name'] }}">
+                        <input type="hidden" name="Logs" value="{{ container['Logs'] }}">
+                        <input type="hidden" name="clientMethod" value="{{ container['clientMethod'] }}">
+                        <button id="pause" type="submit" name="submit" value='Pause' class="btn btn-primary btn-save orange_background" style=" height: 50px;">Pause {{ container.Name }}</button>
+                        <button id="restart" type="submit" name="submit" value='Restart' class="btn btn-primary btn-save orange_background" style=" height: 50px;">Restart {{ container.Name }}</button>
+                        <button id="stop" type="submit" name="submit" value='Stop' class="btn btn-primary btn-save orange_background" style=" height: 50px;">Stop {{ container.Name }}</button>
+                        <button id="remove" type="submit" name="submit" value='Remove' class="btn btn-primary btn-save orange_background" style=" height: 50px;">Remove {{ container.Name }}</button>
+                    </form>
+                {% elif container.Status == 'exited' %}
+                    <form method="POST" action="" onsubmit=loading()>
+                        <input type="hidden" name="Short_Id" value="{{ container['Short_Id'] }}">
+                        <input type="hidden" name="Image" value="{{ container['Image'] }}">
+                        <input type="hidden" name="Name" value="{{ container['Name'] }}">
+                        <input type="hidden" name="Logs" value="{{ container['Logs'] }}">
+                        <input type="hidden" name="clientMethod" value="{{ container['clientMethod'] }}">
+                        <button id="start" type="submit" name="submit" value='Start' class="btn btn-primary btn-save orange_background" style=" height: 50px;">Start {{ container.Name }}</button>
+                        <button id="remove" type="submit" name="submit" value='Remove' class="btn btn-primary btn-save orange_background" style=" height: 50px;">Remove {{ container.Name }}</button>
+                    </form>
+                {% elif container.Status == 'paused' %}
+                    <form method="POST" action="" onsubmit=loading()>
+                        <input type="hidden" name="Short_Id" value="{{ container['Short_Id'] }}">
+                        <input type="hidden" name="Image" value="{{ container['Image'] }}">
+                        <input type="hidden" name="Name" value="{{ container['Name'] }}">
+                        <input type="hidden" name="Logs" value="{{ container['Logs'] }}">
+                        <input type="hidden" name="clientMethod" value="{{ container['clientMethod'] }}">
+                        <button id="unpause" type="submit" name="submit" value='Unpause' class="btn btn-primary btn-save orange_background" style=" height: 50px;">Unpause {{ container.Name }}</button>
+                    </form>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Log File:
+            </th>
+            <td style="width:20px">&nbsp;</td>
+            <td>
+
+            </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td>
+                {{ container.Logs }}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock %}

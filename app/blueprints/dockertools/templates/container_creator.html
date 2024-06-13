@@ -1,0 +1,161 @@
+{% extends 'main_menu.html' %}
+
+{% block content %}
+
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 16px;
+    }
+
+    table tr:nth-child(even) {
+        background-color: #e9f8fc; /* Adjust the greenbar color as desired */
+    }
+
+    table tr:nth-child(even) {
+        background-color: #e9f8fc; /* Adjust the greenbar color as desired */
+    }
+
+    table th,
+    table td {
+        padding: 3px;
+        text-align: left;
+    }
+
+    div#hcenter {
+        margin-left:auto;
+        margin-right:auto;
+        width:300px;
+        text-align:center;
+    }
+</style>
+
+
+
+
+<br>
+
+{% if CMDCont %}
+
+    <form action="" method="POST">
+        <div>
+            <b>
+                Container Files Location:
+            </b>
+            {{ containerLoc }}
+        </div>
+        <div>
+            <input type="hidden" name="CMDCont" value="{{ CMDCont }}">
+            <button type="submit" name="submit" value='Run Existing CMD' class="btn btn-primary btn-save orange_background" style=" height: 50px;">Run Existing CMD</button>
+        </div>
+    </form>
+
+{% endif %}
+
+<form action="" method="POST">
+    <br>
+    <div>
+        <input type="text" name="--name" placeholder="Container name (no spaces)" style="width: 215px;">
+    </div>
+    <br>
+    <div>
+        <b>
+            Required
+        </b>
+    </div>
+    <div>
+        <input type="text" name="image" placeholder="Docker Image Name (Required)" style="width: 240px;">
+        <input type="text" name="tag" placeholder="Image Version" style="width: 125px;">
+        <input type="checkbox" id="latest" name="latest" value="option1">
+        <label for="latest">Pull Latest Image</label>
+    </div>
+    <br>
+    <th>
+        <b>
+            Volume Mapping
+        </b>
+    </th>
+    <br>
+    <div>
+        <input type="text" name="-v1" placeholder="External path to directory/file" style="width: 220px;">
+        <input type="text" name="-v12" placeholder="Internal path to directory/file" style="width: 215px;">
+        <br>
+        <input type="text" name="-v2" placeholder="External path to directory/file" style="width: 220px;">
+        <input type="text" name="-v22" placeholder="Internal path to directory/file" style="width: 215px;">
+        <br>
+        <input type="text" name="-v3" placeholder="External path to directory/file" style="width: 220px;">
+        <input type="text" name="-v32" placeholder="Internal path to directory/file" style="width: 215px;">
+        <br>
+        <input type="text" name="-v4" placeholder="External path to directory/file" style="width: 220px;">
+        <input type="text" name="-v42" placeholder="Internal path to directory/file" style="width: 215px;">
+    </div>
+    <br>
+    <div>
+        <input type="checkbox" id="-d" name="-d" value="option2" checked>
+        <label for="-d">Detached</label>
+    </div>
+    <br>
+    <div>
+        <input type="checkbox" id="-it" name="-it" value="option3">
+        <label for="-it">Interactive Shell</label>
+    </div>
+    <br>
+    <div>
+        <b>
+            Required
+        </b>
+    </div>
+    <div>
+        <input type="radio" id="--rm" name="exitoption" value="--rm"required>
+        <label for="--rm">Remove On Exit</label>
+        <br>
+        <input type="radio" id="--restart" name="exitoption" value="--restart">
+        <label for="--restart">Restart On Exit</label>
+        <br>
+        <input type="radio" id="allow exit" name="exitoption" value="allow exit">
+        <label for="allow exit">Allow To Exit</label>
+    </div>
+    <br>
+    <div>
+        <b>
+            Required
+        </b>
+    </div>
+    <div>
+        <input type="radio" id="dontsave" name="CMDoption" value="dontsave">
+        <label for="dontsave">Don't Save</label>
+        <br>
+        <input type="radio" id="save" name="CMDoption" value="save">
+        <label for="save">Save/Overwrite CMD</label>
+
+        {% if CMDCont %}
+            <br>
+            <input type="radio" id="backup" name="CMDoption" value="backup">
+            <label for="backup">Backup and replace existing CMD</label>
+        {% endif %}
+    </div>
+    <br>
+    <br>
+    <input type="hidden" name="containerLoc" value="{{ containerLoc }}">
+    <button type="submit" name="submit" value='Docker Run' class="btn btn-primary btn-save orange_background" style=" height: 50px;">Docker Run</button>
+</form>
+
+<br>
+<br>
+
+
+    <head>
+        <meta charset="utf-8">
+        <title>Command Result</title>
+    </head>
+    <body>
+        
+        <pre>{{output}}</pre>
+    </body>
+
+
+
+
+
+{% endblock %}

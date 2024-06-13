@@ -1,0 +1,49 @@
+{% extends 'main_menu.html' %}
+
+{% block content %}
+
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 16px;
+    }
+
+    table tr:nth-child(even) {
+        background-color: #e9f8fc; /* Adjust the greenbar color as desired */
+    }
+
+    table tr:nth-child(even) {
+        background-color: #e9f8fc; /* Adjust the greenbar color as desired */
+    }
+
+    table th,
+    table td {
+        padding: 3px;
+        text-align: left;
+    }
+
+    div#hcenter {
+        margin-left:auto;
+        margin-right:auto;
+        width:300px;
+        text-align:center;
+    }
+</style>
+
+
+
+<br>
+
+<form action="" method="POST">
+    <div>
+        <input type="text" name="containerlocation" placeholder="Docker container files path (Required)" style="width: 305px;" required>
+    </div>
+    <br>
+    <br>
+    <button type="submit" name="submit" value='CMD Checked' class="btn btn-primary btn-save orange_background" style=" height: 50px;">Docker Run</button>
+</form>
+
+
+
+{% endblock %}

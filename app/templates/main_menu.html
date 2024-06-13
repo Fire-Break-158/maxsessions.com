@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block menu %}
+    <!-- ======= Sidebar ======= -->
+    <aside id="sidebar" class="sidebar">
+
+        <ul class="sidebar-nav" id="sidebar-nav">
+
+            <li class="nav-heading">Home</li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" data-bs-target="#docker-nav" data-bs-toggle="collapse" href="#">
+                  <i class="icon-holder-custom1 icon-docker"></i><span>Docker</span><i class="bi bi-chevron-down ms-auto"></i>
+              </a>
+              <ul id="docker-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                  <li class="nav-item">
+                      <a class="nav-link collapsed" href="/dockertools/docker-container-manager">
+                        <i class="icon-holder-custom1 icon-docker-gear"></i>
+                        <span>Docker Container Manager</span>
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link collapsed" href="/dockertools/docker-container-creator">
+                        <i class="icon-holder-custom1 icon-docker-plus"></i>
+                        <span>Docker Container Creator</span>
+                      </a>
+                  </li>
+              </ul>
+          </li>
+                               
+        </ul>
+
+    </aside>
+    <!-- End Sidebar-->
+{% endblock %}

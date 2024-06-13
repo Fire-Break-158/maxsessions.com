@@ -1,0 +1,84 @@
+{% extends 'main_menu.html' %}
+
+{% block content %}
+
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 16px;
+    }
+
+    table tr:nth-child(even) {
+        background-color: #e9f8fc; /* Adjust the greenbar color as desired */
+    }
+
+    table tr:nth-child(even) {
+        background-color: #e9f8fc; /* Adjust the greenbar color as desired */
+    }
+
+    table th,
+    table td {
+        padding: 3px;
+        text-align: left;
+    }
+
+    div#hcenter {
+        margin-left:auto;
+        margin-right:auto;
+        width:300px;
+        text-align:center;
+    }
+</style>
+
+
+
+<div id="content">
+    <table style="font-size: 20px;">
+        <thead>
+            <tr>
+                <th>
+                    Container Name
+                </th>
+                <th>
+                    Image
+                </th>
+                <th>
+                    Status
+                </th>
+            </tr>
+        </thead>    
+            <tbody>
+                {% for container in containers %}
+                    <tr>
+                        <td> 
+                            <form method="POST" action=""> 
+                            <input type="hidden" name="Short_Id" value="{{ container.Short_Id }}">
+                            <button id="submit" type="submit" name="submit" value='Container Selected' style="width: 200px; height: 40px;">{{ container.Name }}</button>
+                            </form>
+                        </td>
+                        <td>
+                            {{ container.Image }}
+                        </td>
+                        <td>
+                            {% if container.Status == 'running' %}
+                                <img src="{{ url_for('dockertools.static', filename='images/GreenDot.svg') }}" width="5%">
+                            {% elif container.Status == 'exited' %}
+                                <img src="{{ url_for('dockertools.static', filename='images/RedDot.svg') }}" width="5%">
+                            {% elif container.Status == 'restarting' %}
+                                <img src="{{ url_for('dockertools.static', filename='images/YellowDot.svg') }}" width="5%">
+                            {% elif container.Status == 'paused' %}
+                                <img src="{{ url_for('dockertools.static', filename='images/YellowDot.svg') }}" width="5%">
+                            {% elif container.Status == 'created' %}
+                                <img src="{{ url_for('dockertools.static', filename='images/YellowDot.svg') }}" width="5%">
+                            {% endif %}
+                            {{ container.Status }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody> 
+    </table>
+
+</div>
+
+{% endblock %}

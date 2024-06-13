@@ -1,0 +1,29 @@
+{% extends 'main_menu.html' %}
+{% set required_permissions = [] %}
+
+{% block content %}
+<div class="pagetitle">
+  <h1>Max Sessions Home</h1>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active"><a href="/">Home</a></li>
+    </ol>
+  </nav>
+</div><!-- End Page Title -->
+
+<div class="container" style="max-width: 60%;">
+  <div class="d-flex justify-content-center">
+    <img src="{{ url_for('static', filename='images/MaxSessionsLogo.svg') }}" class="img-fluid mb-3" width="400">
+  </div>
+  <div class="text-start">
+      <p>
+        This website is a portfolio for myself along with a wide range of various tools that I actively use for my special interests/hobbies. Areas with sensitive tools will require authentication/login 
+        before you can enter as I don't want the general populus to have access to these tools. After login, if you don't have the permissions to use them you will still be able to view them in a disabled state
+        for demonstration purposes.
+      </p>
+      <p>
+        Information and permission requests should be directed to <a href="mailto:maxsessionsjr@gmail.com">maxsessionsjr@gmail.com</a>
+      </p>
+  </div>
+</div>
+{% endblock %}
