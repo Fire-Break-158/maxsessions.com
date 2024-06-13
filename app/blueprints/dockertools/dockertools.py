@@ -160,14 +160,11 @@ def containerCreator():
 
         if data['submit'] == 'Directory Selected':
             if 'uniqueLocation' in data and data['uniqueLocation']:
-                uniqueLocation = data['uniquelocation']
-                print(uniqueLocation)
+                uniqueLocation = data['uniqueLocation']
                 containerLoc = uniqueLocation
             else:
                 containerLoc = data['path'] + '/' + data['containerLocation']
-            print(containerLoc)
             CMDLoc = containerLoc + '/CMD'
-            print(CMDLoc)
             try:
                 with open(CMDLoc, 'r') as file:
                     CMDCont = file.read()
