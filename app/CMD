@@ -1,6 +1,7 @@
-docker run
-    --name maxsessions.com
-    --rm
-    -d
-    -v /home/msessions:/app/dockerfiles
-    maxsessions.com
+docker run \
+	--name maxsessions.com \
+	--rm \
+	-d \
+	-v /home/msessions:/app/dockerfiles \
+	-p 8080:8000 \
+	maxsessionssite
