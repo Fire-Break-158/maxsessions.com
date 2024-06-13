@@ -1,3 +1,0 @@
-﻿function BindEvents() {
-    $("#affiliations").dataTable();
-}
