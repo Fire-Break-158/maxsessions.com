@@ -159,7 +159,12 @@ def containerCreator():
         data = request.form.to_dict()
 
         if data['submit'] == 'Directory Selected':
-            containerLoc = data['path'] + '/' + data['containerlocation']
+            if 'uniqueLocation' in data and data['uniqueLocation']:
+                uniqueLocation = data['uniquelocation']
+                print(uniqueLocation)
+                containerLoc = uniqueLocation
+            else:
+                containerLoc = data['path'] + '/' + data['containerLocation']
             print(containerLoc)
             CMDLoc = containerLoc + '/CMD'
             print(CMDLoc)
