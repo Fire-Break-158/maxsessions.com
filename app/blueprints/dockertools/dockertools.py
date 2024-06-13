@@ -15,11 +15,6 @@ from datetime import datetime
 dockertools = Blueprint('dockertools', __name__, template_folder='templates', static_folder='static')
 
 
-@dockertools.route('/')
-def index():
-    return render_template('docker_index.html')
-
-
 
 
 

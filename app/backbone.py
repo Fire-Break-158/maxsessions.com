@@ -65,35 +65,35 @@ def asint(value):
 
 
 
-@app.errorhandler(Exception)
-def handle_error(e):
-    # Check if the error is a 404 and retrieve the original URL
-    original_url = None
-    if isinstance(e, NotFound):
-        original_url = request.url
-
-    # This error handler will handle exceptions not caught by a try/except block
-    rootUrl=request.url_root
-    previousUrl = request.referrer if request.referrer else request.url_root
-
-    # Modify the message to include the original_url for 404 errors
-    if original_url:
-        message = f"Could not find the requested page: {original_url}. Please try again by going <a href='{previousUrl}'>back</a> to the previous page or return to the <a href='{rootUrl}'>Backoffice Home</a>"
-    else:
-        message = f"Please try again by going <a href='{previousUrl}'>back</a> to the previous page or return to the <a href='{rootUrl}'>Backoffice Home</a>"
-
-    trace = traceback.format_exc()
-    exc_type, exc_value, exc_traceback = sys.exc_info()
-    traceback_details = traceback.format_exception(exc_type, exc_value, exc_traceback)
-    formatted_traceback = ''.join(traceback_details)
-    debugInfo = f'''
-    <b>Debugging Information Below:</b><br>
-    <pre>
-    {formatted_traceback}
-    </pre>
-    '''
-    print(f"{str(e)}\n {str(message)}\n {str(debugInfo)}")
-    return render_template('response.html', responseType='Error', data=str(e), data2=message, data3=debugInfo, sideMenu=False)
+#@app.errorhandler(Exception)
+#def handle_error(e):
+#    # Check if the error is a 404 and retrieve the original URL
+#    original_url = None
+#    if isinstance(e, NotFound):
+#        original_url = request.url
+#
+#    # This error handler will handle exceptions not caught by a try/except block
+#    rootUrl=request.url_root
+#    previousUrl = request.referrer if request.referrer else request.url_root
+#
+#    # Modify the message to include the original_url for 404 errors
+#    if original_url:
+#        message = f"Could not find the requested page: {original_url}. Please try again by going <a href='{previousUrl}'>back</a> to the previous page or return to the <a href='{rootUrl}'>Backoffice Home</a>"
+#    else:
+#        message = f"Please try again by going <a href='{previousUrl}'>back</a> to the previous page or return to the <a href='{rootUrl}'>Backoffice Home</a>"
+#
+#    trace = traceback.format_exc()
+#    exc_type, exc_value, exc_traceback = sys.exc_info()
+#    traceback_details = traceback.format_exception(exc_type, exc_value, exc_traceback)
+#    formatted_traceback = ''.join(traceback_details)
+#    debugInfo = f'''
+#    <b>Debugging Information Below:</b><br>
+#    <pre>
+#    {formatted_traceback}
+#    </pre>
+#    '''
+#    print(f"{str(e)}\n {str(message)}\n {str(debugInfo)}")
+#    return render_template('response.html', responseType='Error', data=str(e), data2=message, data3=debugInfo, sideMenu=False)
 
 
 
