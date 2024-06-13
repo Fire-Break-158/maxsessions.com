@@ -1,7 +1,10 @@
 ##### Minimum #####
 
 The bare minimum to get started would be 
-- create an ENV file with contents like 'export BASEDIR=/path/to/docker/files/external/to/containers'
+- create an ENV file
+	- This is to differentiate between production and development. 
+	- Development typically would be whatever path to your test directory like 'export BASEDIR=/path/to/docker/files/external/to/containers' 
+	- Production should be 'BASEDIR=/app/dockerfiles' unless you change the setup for some reason, you can see that this is also mapped in the CMD as is explained later.
 
 
 
@@ -26,7 +29,8 @@ The dev environment runs in a verbose mode to make troubleshooting easier, event
 To get started with production, first complete the minimum section above
 - in terminal, navigate to the /maxsessions.com/app directory and run 'build -t "desiredimagename" .'
 - change the name, -v line and final line in the CMD file
-	- you need to change the path before ':' to the directory where you plan to store your docker directories for your various container files and images.
+	- you need to change the path before ':' to the directory where you plan to store your docker directories for your various container files and images. 
+		- After the ':' should stay the same unless you know what you are doing
 	- the final line has to be the image name you made in the docker build command
 - run the command 'sudo bash CMD'
 
