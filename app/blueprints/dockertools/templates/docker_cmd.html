@@ -32,7 +32,7 @@
 
     .grid-container {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
         gap: 25px;
     }
 
@@ -54,7 +54,7 @@
             <form method="POST" action="">
                 <input type="hidden" name="path" value="{{ path }}">
                 <input type="hidden" name="containerlocation" value="{{ item }}">
-                <button id="submit" type="submit" name="submit" value='Directory Selected' style="width: 100%; height: 50px; font-size: 20px;">{{ item }}</button>
+                <button id="submit" type="submit" name="submit" value='Directory Selected' class="btn btn-primary btn-save orange_background" style="width: 100%; height: 75px; font-size: 20px; font-weight: bold;">{{ item }}</button>
             </form>
         </div>
     {% endfor %}
