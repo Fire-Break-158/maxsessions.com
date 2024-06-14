@@ -1,7 +1,7 @@
 from flask import (
     Blueprint, 
     render_template, 
-    request
+    send_from_directory
 )
 from datetime import datetime
 
@@ -42,3 +42,8 @@ def August06():
 @familyphotos.route('/December05')
 def December05():
     return render_template('December05.html')
+
+
+@familyphotos.route('/October02')
+def October02():
+    return render_template('October02.html')
