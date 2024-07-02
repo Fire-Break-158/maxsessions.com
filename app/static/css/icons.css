@@ -49,16 +49,31 @@
 /*  J   */
 
 /*  K   */
+.icon-keycloak {
+    background-image: url("/static/images/icons/icon-keycloak.svg");
+    height: 40px;
+    width: 40px;
+}
 
 /*  L   */
 
 /*  M   */
 
 /*  N   */
+.icon-nginx {
+    background-image: url("/static/images/icons/icon-nginx.svg");
+    height: 40px;
+    width: 40px;
+}
 
 /*  O   */
 
 /*  P   */
+.icon-phpmyadmin {
+    background-image: url("/static/images/icons/icon-phpmyadmin.svg");
+    height: 42px;
+    width: 42px;
+}
 
 /*  Q   */
 
