@@ -1,5 +1,5 @@
 FROM python:3.8-slim-buster
-COPY . /app
+COPY ./app /app
 WORKDIR /app
 RUN mkdir -p /app/dockerfiles
 RUN apt-get -y update

@@ -28,10 +28,9 @@ The dev environment runs in a verbose mode to make troubleshooting easier, event
 
 To get started with production, first complete the minimum section above
 - in terminal, navigate to the /maxsessions.com/app directory and run 'build -t "desiredimagename" .'
-- change the name, -v line and final line in the CMD file
+- change the container name, -v line and final line in the CMD file to the image name you chose in the step above 
 	- you need to change the path before ':' to the directory where you plan to store your docker directories for your various container files and images. 
 		- After the ':' should stay the same unless you know what you are doing
-	- the final line has to be the image name you made in the docker build command
 - run the command 'sudo bash CMD'
 
 This is how to get the site running in production
