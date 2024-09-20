@@ -75,7 +75,7 @@
         </b>
     </div>
     <div>
-        <input type="text" name="image" placeholder="Docker Image Name (Required)" style="width: 240px;">
+        <input type="text" name="image" placeholder="Docker Image Name (Required)" style="width: 240px;" required>
         <input type="text" name="tag" placeholder="Image Version" style="width: 125px;">
         <input type="checkbox" id="latest" name="latest" value="option1">
         <label for="latest">Pull Latest Image</label>
@@ -88,17 +88,17 @@
     </th>
     <br>
     <div>
-        <input type="text" name="-v1" placeholder="External path to directory/file" style="width: 220px;">
-        <input type="text" name="-v12" placeholder="Internal path to directory/file" style="width: 215px;">
+        <input type="text" name="-v1" placeholder="External path to directory/file" style="width: 235px;">
+        <input type="text" name="-v12" placeholder="Internal path to directory/file" style="width: 230px;">
         <br>
-        <input type="text" name="-v2" placeholder="External path to directory/file" style="width: 220px;">
-        <input type="text" name="-v22" placeholder="Internal path to directory/file" style="width: 215px;">
+        <input type="text" name="-v2" placeholder="External path to directory/file" style="width: 235px;">
+        <input type="text" name="-v22" placeholder="Internal path to directory/file" style="width: 230px;">
         <br>
-        <input type="text" name="-v3" placeholder="External path to directory/file" style="width: 220px;">
-        <input type="text" name="-v32" placeholder="Internal path to directory/file" style="width: 215px;">
+        <input type="text" name="-v3" placeholder="External path to directory/file" style="width: 235px;">
+        <input type="text" name="-v32" placeholder="Internal path to directory/file" style="width: 230px;">
         <br>
-        <input type="text" name="-v4" placeholder="External path to directory/file" style="width: 220px;">
-        <input type="text" name="-v42" placeholder="Internal path to directory/file" style="width: 215px;">
+        <input type="text" name="-v4" placeholder="External path to directory/file" style="width: 235px;">
+        <input type="text" name="-v42" placeholder="Internal path to directory/file" style="width: 230px;">
     </div>
     <br>
     <th>
@@ -107,17 +107,17 @@
         </b>
     </th>
     <div>
-        <input type="text" name="-p1" placeholder="Machine port" style="width: 220px;">
-        <input type="text" name="-p12" placeholder="Container port" style="width: 215px;">
+        <input type="text" name="-p1" placeholder="Machine port" style="width: 120px;">
+        <input type="text" name="-p12" placeholder="Container port" style="width: 125px;">
         <br>
-        <input type="text" name="-p2" placeholder="Machine port" style="width: 220px;">
-        <input type="text" name="-p22" placeholder="Container port" style="width: 215px;">
+        <input type="text" name="-p2" placeholder="Machine port" style="width: 120px;">
+        <input type="text" name="-p22" placeholder="Container port" style="width: 125px;">
         <br>
-        <input type="text" name="-p3" placeholder="Machine port" style="width: 220px;">
-        <input type="text" name="-p32" placeholder="Container port" style="width: 215px;">
+        <input type="text" name="-p3" placeholder="Machine port" style="width: 120px;">
+        <input type="text" name="-p32" placeholder="Container port" style="width: 125px;">
         <br>
-        <input type="text" name="-p4" placeholder="Machine port" style="width: 220px;">
-        <input type="text" name="-p42" placeholder="Container port" style="width: 215px;">
+        <input type="text" name="-p4" placeholder="Machine port" style="width: 120px;">
+        <input type="text" name="-p42" placeholder="Container port" style="width: 125px;">
     </div>
     <br>
     <div>
@@ -136,7 +136,7 @@
         </b>
     </div>
     <div>
-        <input type="radio" id="--rm" name="exitoption" value="--rm"required>
+        <input type="radio" id="--rm" name="exitoption" value="--rm" required>
         <label for="--rm">Remove On Exit</label>
         <br>
         <input type="radio" id="--restart" name="exitoption" value="--restart">
@@ -152,11 +152,17 @@
         </b>
     </div>
     <div>
-        <input type="radio" id="dontsave" name="CMDoption" value="dontsave">
+        <input type="radio" id="dontsave" name="CMDoption" value="dontsave" required>
         <label for="dontsave">Don't Save</label>
         <br>
         <input type="radio" id="save" name="CMDoption" value="save">
         <label for="save">Save/Overwrite CMD</label>
+    </div>
+    <br>
+    <div>
+        <input type="checkbox" id="update_reboot" name="update_reboot" value="update_reboot">
+        <label for="update_reboot">Update and restart container daily at 5am</label>
+    </div>
 
         {% if CMDCont %}
             <br>

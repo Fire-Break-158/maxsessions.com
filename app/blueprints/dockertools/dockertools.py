@@ -166,7 +166,7 @@ def containerCreator():
                 return render_template('container_creator.html', containerLoc=containerLoc, CMDCont=CMDCont)
             except FileNotFoundError:
                 return render_template('container_creator.html', containerLoc=containerLoc)
-
+            
         
 
         elif data['submit'] == 'Run Existing CMD':
@@ -274,18 +274,29 @@ def containerCreator():
                     latest = ':latest'
                     CMDCont += latest
                 
-                
                 CMDCont = CMDCont.strip()
+
+
+                if 'update_reboot' in data:
+                    RebootCom = f"""echo "0 5 * * * docker stop {data['--name']} && sleep 60 && docker rm {data['--name']} && sleep 60 && {CMDCont}" > /tmp/mycron
+                    crontab /tmp/mycron
+                    rm /tmp/mycron
+                    """                    
+                    print(RebootCom)
 
 
                 if 'CMDoption' in data and data['CMDoption'] and  data['CMDoption'] == 'dontsave':
                     subprocess.run([CMDCont], shell=True)
+                    if RebootCom:
+                        subprocess.run(RebootCom, shell=True, executable='/bin/bash')
                     return render_template('docker_cmd.html')
                 if 'CMDoption' in data and data['CMDoption'] and  data['CMDoption'] == 'save':
                     CMDLoc = containerLoc + '/CMD'
                     with open(CMDLoc, 'w') as file:
                         file.write(CMDCont)
                     subprocess.run([CMDCont], shell=True)
+                    if RebootCom:
+                        subprocess.run(RebootCom, shell=True, executable='/bin/bash')
                     return render_template('docker_cmd.html')
                 elif 'CMDoption' in data and data['CMDoption'] and  data['CMDoption'] == 'backup':
                     renameCom = f'cd {containerLoc} && mv CMD {CMDBackup}'
@@ -294,6 +305,8 @@ def containerCreator():
                         file.write(CMDCont)
                     subprocess.run([renameCom], shell=True)
                     subprocess.run([CMDCont], shell=True)
+                    if RebootCom:
+                        subprocess.run(RebootCom, shell=True, executable='/bin/bash')
                     return render_template('docker_cmd.html')
 
                 

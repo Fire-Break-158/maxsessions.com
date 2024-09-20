@@ -129,13 +129,6 @@ def asint(value):
 
 
 
-# Store oidc in g
-#@app.before_request
-#def before_request():
-#    g.oidc = oidc
-
-
-
 ##
 ## Setup complete, Routes below
 ##
