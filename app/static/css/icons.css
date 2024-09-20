@@ -16,6 +16,11 @@
 /*  B   */
 
 /*  C   */
+.icon-cronjobs {
+    background-image: url("/static/images/icons/icon-cronjobs.svg");
+    height: 35px;
+    width: 35px;
+}
 
 /*  D   */
 .icon-docker {
