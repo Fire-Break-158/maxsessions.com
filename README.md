@@ -1,10 +1,11 @@
 ##### Minimum #####
 
 The bare minimum to get started would be 
+- have docker installed on the base machine and ensure the current user is in the 'docker' group. If you just now added the user to the group, logout, and log back in for it to take effect, then continue with the rest below
 - create an ENV file
 	- This is to differentiate between production and development. 
-	- Development typically would be whatever path to your test directory like 'export BASEDIR=/path/to/docker/files/external/to/containers' 
-	- Production should be 'BASEDIR=/app/dockerfiles' unless you change the setup for some reason, you can see that this is also mapped in the CMD as is explained later.
+	- The ENV file for development typically would be whatever path to your test directory and just have 1 line that looks like "export BASEDIR=/path/to/docker/files/external/to/containers" 
+	- I recommend the base directory for production to be 'BASEDIR=/app/dockerfiles' unless you change the setup for some reason, you can see that this is also mapped in the CMD as is explained later.
 
 
 
@@ -39,7 +40,7 @@ This is how to get the site running in production
 
 ##### File Structure #####
 
-Just so you understand, the docker directory I am referring to is a structure similar to this:
+Just so you understand, the docker directory I am referring to is a structure similar to this (best read in a text editor, git webpage doesn't display properly):
 
 /dockercontainers
 	/terraria
