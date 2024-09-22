@@ -1,27 +1,15 @@
 import os
 
-class Config(object):
-        MQTT_BROKER = {
-        'Address': '172.16.10.10',
-        'Port': 1883
-    }
-
     
+
 class ProductionConfig(Config):
+    APP_ENVIRONMENT = 'Production'
     TESTING = False
     DEBUG = False    
 
 
 
 class DevelopmentConfig(Config):
+    APP_ENVIRONMENT = 'Software Development'
     TESTING = True
     DEBUG = True
-
-    
-    
-class TestingConfig(Config):
-    TESTING = True
-    DEBUG = False    
-
-
-
