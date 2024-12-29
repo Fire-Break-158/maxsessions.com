@@ -46,6 +46,11 @@
 /*  F   */
 
 /*  G   */
+.icon-gitlab {
+    background-image: url("/static/images/icons/icon-gitlab.svg");
+    height: 70px;
+    width: 40px;
+}
 
 /*  H   */
 
